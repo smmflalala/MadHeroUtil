@@ -32,6 +32,10 @@
 			layer: {
 				type: [Number, String],
 				default: 0
+			},
+			show: {//是否展开，展开点击事件才有效
+				type: [Boolean, String],
+				default: false
 			}
 		},
 		data() {
@@ -45,7 +49,10 @@
 		methods: {
 			//步骤选项点击事件
 			stepClick(index){
-				console.log(this.list)
+				//未展开时阻止点击事件
+				if(!this.show){ return }
+				
+				// console.log(this.list)
 				//若未初始化，或为未选中状态，则初始化或改为选中状态
 				if(!this.list[index].choose){
 					// console.log('选择')
@@ -82,7 +89,6 @@
 				for(let i = 0; i < this.list.length; i++){
 					let item = this.list[i]
 					if(i <= this.step - 1){
-						console.log(this.step - 1)
 						item.choose = true
 						// let item = { choose: true, title: this.list[i].title, num: this.list[i].num }
 						this.$set(this.list, i, item)
@@ -98,22 +104,30 @@
 					// 	item.selectIndex: 0
 					// }
 					
+					
 				}
-				console.log(this.list)
+				// console.log(this.list)
 			},
 			
 			//下拉选择事件
 			selectOption(option, index){
+				
+				//未展开时阻止点击事件
+				if(!this.show){ return }
+				
 				// console.log(option, index)
 				let item = this.list[index]
 				item.selectTitle = option.label
 				item.selectIndex = option.value
 				this.$set(this.list, index, item)
 				
-				this.$emit('slidChange')
+				this.$emit('calcAcupoint')
 			},
 			
 			stepChange(index){
+				//未展开时阻止点击事件
+				if(!this.show){ return }
+				
 				this.$emit('stepChange', index)
 			}
 			

@@ -2,20 +2,28 @@
 	<view class="content">
 		
 		<view class="acupoint-view">
-			<view class="mask" v-if="(acupointList[0].show || acupointList[1].show || acupointList[2].show || acupointList[3].show)"></view>
-			<scroll-view scroll-y class="acupoint-item" :class="(item.show ? 'float-item' : '')" v-for="(item, index) in acupointList" :key="index" @click="acupointClick(index)">
-				<!-- {{tem.list[0].title}} -->
-				<view class="check-view" @click="checkViewClick">
-					<acupoint-steps :list="item.list" :layer="item.layer" :step="item.step" v-if="item.reFresh" @stepChange="stepChange" @sliderChange="calcAcupoint"></acupoint-steps>
-					
-					<view class="slider-view">
-						<slider :value="item.layer" show-value min="1" max="9" activeColor="#007AFF" @change="sliderChange" @changing="sliderChange" />
+			<view class="mask" @click="acupointHide" v-if="(acupointList[0].show || acupointList[1].show || acupointList[2].show || acupointList[3].show)"></view>
+			<block v-for="(item, index) in acupointList" :key="index">
+				<scroll-view scroll-y class="acupoint-item" :class="(item.show ? 'float-item' : '')" @click="acupointClick(index)">
+					<!-- {{tem.list[0].title}} -->
+					<view class="check-view" @click="checkViewClick">
+						<acupoint-steps :list="item.list" :layer="item.layer" :step="item.step" :show="item.show" @stepChange="stepChange" @calcAcupoint="calcAcupoint"></acupoint-steps>
+						
+						<view class="slider-view">
+							<slider :value="item.layer" :disabled="!item.show" show-value min="1" max="9" activeColor="#007AFF" @change="sliderChange" @changing="sliderChange" />
+						</view>
+						<!-- <text>{{item.text}}</text> -->
+						<view class="colse-btn" @click.stop="acupointHide">关闭</view>
 					</view>
-					<text>{{item.text}}</text>
-					<view class="colse-btn" @click="acupointHide">关闭</view>
-				</view>
-				
-			</scroll-view>
+					
+				</scroll-view>
+				<!-- <view class="acupoint-title" v-if="item.show">asdasd</view> -->
+			</block>
+		</view>
+		<view class="info-view">
+			<view class="title-view">
+				<text class="title" v-for="(item, index) in acupointList" :key="index">{{item.title}}</text>
+			</view>
 		</view>
 		
 	</view>
@@ -32,61 +40,176 @@
 				acupointIndex: 0,
 				acupointList: [
 					{
+						title: 'aa',
 						show: false,
+						layer: 1,
+						step: 2,
+						reFresh: true,
+						text: '',
 						list:[
 							{
-								title: '我是文字',
+								title: '我是文字1',
 								num: [10, 20, 30, 40, 50]
 							}, 
 							{
-								title: '我是文字',
+								title: '我是文字1',
 								num: [10, 20, 30, 40, 50]
 							}, 
 							{
 								title: [
-									{ label: 'aa', value: 0, num: [10, 20, 30, 40, 50] },
-									{ label: 'bb', value: 1, num: [10, 20, 30, 40, 50] },
-									{ label: 'cc', value: 2, num: [10, 20, 30, 40, 50] },
+									{ label: '我是文字1', value: 0, num: [10, 20, 30, 40, 50] },
+									{ label: '我是文字1', value: 1, num: [10, 20, 30, 40, 50] },
+									{ label: '我是文字1', value: 2, num: [10, 20, 30, 40, 50] },
 								],
 								selectTitle: '',
 								selectIndex: 0,
 							},
 							{
-								title: '我是文字',
+								title: '我是文字1',
 								num: [10, 20, 30, 40, 50]
 							}, 
 							{
-								title: '我是文字',
+								title: '我是文字1',
 								num: [10, 20, 30, 40, 50]
 							}, 
 							{
-								title: '我是文字',
+								title: '我是文字1',
 								num: [10, 20, 30, 40, 50]
 							}
 							
-						],
+						]
+					},
+					{
+						title: 'bb',
+						show: false,
 						layer: 2,
 						step: 3,
 						reFresh: true,
-						text: ''
+						text: '',
+						list:[
+							{
+								title: '我是文字2',
+								num: [10, 20, 30, 40, 50]
+							}, 
+							{
+								title: '我是文字2',
+								num: [10, 20, 30, 40, 50]
+							}, 
+							{
+								title: [
+									{ label: '我是文字2.1', value: 0, num: [10, 20, 30, 40, 50] },
+									{ label: '我是文字2.2', value: 1, num: [10, 20, 30, 40, 50] },
+									{ label: '我是文字2.3', value: 2, num: [10, 20, 30, 40, 50] },
+								],
+								selectTitle: '',
+								selectIndex: 0,
+							},
+							{
+								title: '我是文字2',
+								num: [10, 20, 30, 40, 50]
+							}, 
+							{
+								title: '我是文字2',
+								num: [10, 20, 30, 40, 50]
+							}, 
+							{
+								title: '我是文字2',
+								num: [10, 20, 30, 40, 50]
+							}
+							
+						]
 					},
 					{
-						show: false
+						title: 'cc',
+						show: false,
+						layer: 3,
+						step: 4,
+						reFresh: true,
+						text: '',
+						list:[
+							{
+								title: '我是文字3',
+								num: [10, 20, 30, 40, 50]
+							}, 
+							{
+								title: '我是文字3',
+								num: [10, 20, 30, 40, 50]
+							}, 
+							{
+								title: [
+									{ label: '我是文字3.1', value: 0, num: [10, 20, 30, 40, 50] },
+									{ label: '我是文字3.2', value: 1, num: [10, 20, 30, 40, 50] },
+									{ label: '我是文字3.3', value: 2, num: [10, 20, 30, 40, 50] },
+								],
+								selectTitle: '',
+								selectIndex: 0,
+							},
+							{
+								title: '我是文字3',
+								num: [10, 20, 30, 40, 50]
+							}, 
+							{
+								title: '我是文字3',
+								num: [10, 20, 30, 40, 50]
+							}, 
+							{
+								title: '我是文字3',
+								num: [10, 20, 30, 40, 50]
+							}
+							
+						]
 					},
 					{
-						show: false
-					},
-					{
-						show: false
+						title: 'dd',
+						show: false,
+						layer: 4,
+						step: 5,
+						reFresh: true,
+						text: '',
+						list:[
+							{
+								title: '我是文字4',
+								num: [10, 20, 30, 40, 50]
+							}, 
+							{
+								title: '我是文字4',
+								num: [10, 20, 30, 40, 50]
+							}, 
+							{
+								title: [
+									{ label: '我是文字4.1', value: 0, num: [10, 20, 30, 40, 50] },
+									{ label: '我是文字4.2', value: 1, num: [10, 20, 30, 40, 50] },
+									{ label: '我是文字4.3', value: 2, num: [10, 20, 30, 40, 50] },
+								],
+								selectTitle: '',
+								selectIndex: 0,
+							},
+							{
+								title: '我是文字4',
+								num: [10, 20, 30, 40, 50]
+							}, 
+							{
+								title: '我是文字4',
+								num: [10, 20, 30, 40, 50]
+							}, 
+							{
+								title: '我是文字4',
+								num: [10, 20, 30, 40, 50]
+							}
+							
+						]
 					}
 				]
 				
 				
 			}
 		},
+		onLoad() {
+			this.calcAllAcupoint()
+		},
 		methods: {
 			acupointClick(index){
-				console.log('acupointClick')
+				// console.log('acupointClick')
 				this.acupointIndex = index
 				
 				// for(let i = 0, len = this.acupointList.length; i < len; i++){
@@ -101,13 +224,11 @@
 			},
 			
 			checkViewClick(){
-				console.log('checkViewClick')
+				// console.log('checkViewClick')
 			},
 			
 			sliderChange(e){
-				// console.log(e.detail.value)
 				this.acupointList[this.acupointIndex].layer = e.detail.value
-				// console.log(this.acupointList[this.acupointIndex])
 				this.calcAcupoint()
 			},
 			
@@ -119,10 +240,12 @@
 				
 			},
 			
-			calcAcupoint(){
+			calcAcupoint(index){
+				
+				index = index || this.acupointIndex
 				//获取当前经脉数组
-				let acupoint = this.acupointList[this.acupointIndex]
-				let text = ''
+				let acupoint = this.acupointList[index]
+				let text = []
 				
 				
 				//遍历经脉，计算所选layer的上一层总和，再加上所选step的值
@@ -142,13 +265,32 @@
 					//判断是否为数组，是数组则为多选经脉，进行特殊处理
 					if(Array.isArray(item.title)){
 						//selectTitle为空则默认第一项，值为undedine则为0
-						text += ( item.selectTitle || item.title[0].label ) + '+' + ( item.title[item.selectIndex].num[layer] || 0 ) + ' , '
+						// text += ( item.selectTitle || item.title[0].label ) + '+' + ( item.title[item.selectIndex].num[layer] || 0 ) + ' , '
+						text.push({
+							title: ( item.selectTitle || item.title[0].label ),
+							value: ( item.title[item.selectIndex].num[layer] || 0 )
+						})
 					}else{
-						text += item.title + '+' + ( item.num[layer] || 0 ) + ' , '
+						// text += item.title + '+' + ( item.num[layer] || 0 ) + ' , '
+						text.push({
+							title: item.title,
+							value: ( item.num[layer] || 0 )
+						})
 					}
 					
 				}
-				console.log(text)
+				
+				acupoint.text = text
+				
+				console.log(acupoint)
+			},
+			
+			//获取4个经脉的值
+			calcAllAcupoint(){
+				for(let i in this.acupointList ){
+					this.calcAcupoint(i)
+				}
+				// console.log(this.acupointList)
 			}
 			
 			
@@ -210,6 +352,7 @@
 		
 		.acupoint-item:nth-child(1){
 			left: 30rpx;
+			
 		}
 		.acupoint-item:nth-child(2){
 			left: calc(((100vw - 150rpx) / 4) + 60rpx);
@@ -247,6 +390,32 @@
 			z-index: 13;
 		}
 		
+		
+	}
+	
+	.info-view{
+		width: 100%;
+		height: 100%;
+		padding-top: calc((80vh) / 5);
+		box-sizing: border-box;
+		margin: 30rpx 0rpx;
+		
+		.title-view{
+			display: flex;
+			
+			.title{
+				flex: 1;
+				text-align: center;
+				margin: 0rpx 30rpx;
+			}
+			
+			.title:nth-child(1){
+				margin-left: 0rpx;
+			}
+			.title:nth-child(4){
+				margin-left: 0rpx;
+			}
+		}
 		
 	}
 </style>
