@@ -1,0 +1,1 @@
+<view class="content"><block qq:for="{{acupointList}}" qq:for-item="item" qq:for-index="index" qq:key="index"><view data-event-opts="{{[['tap',[['acupointClick',[index]]]]]}}" class="{{['aaa',item.show?'ddd':'']}}" bindtap="__e">{{index}}</view></block></view>
